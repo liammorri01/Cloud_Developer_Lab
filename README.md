@@ -1,60 +1,125 @@
-# Terraform - Azure Day 1 Foundations
+# Cloud Developer Lab
 
-This folder contains the Terraform configuration used to recreate the Azure Day 1 infrastructure using Infrastructure as Code.
+Hands-on cloud development lab focused on building practical skills in Azure, PowerShell, Terraform, Git, GitHub Actions, automation, CI/CD, monitoring, and troubleshooting.
 
 ## Purpose
 
-The goal of this lab is to move from manually creating Azure resources with PowerShell to defining the same infrastructure using Terraform.
+This repository documents my practical cloud learning through small, focused projects.
 
-This allows the infrastructure to be version controlled, validated, reviewed, and later deployed through CI/CD.
+The goal is to combine structured learning with hands-on implementation rather than relying on theory alone.
 
-## Files
+Each lab is built, tested, troubleshot, and documented as I progress.
+
+## Technologies
+
+- Microsoft Azure
+- PowerShell
+- Terraform
+- Git and GitHub
+- GitHub Actions
+- Linux / WSL
+- Python
+- Infrastructure as Code
+- CI/CD
+- Azure monitoring and diagnostics
+
+## Learning Approach
+
+Each topic follows a practical workflow:
+
+1. Learn the core concept
+2. Build or deploy something
+3. Verify the result
+4. Troubleshoot failures
+5. Document what happened
+6. Automate where possible
+7. Commit the work to Git
+
+## Repository Structure
 
 ```text
-terraform/
-├── README.md
-├── main.tf
-├── outputs.tf
-├── providers.tf
-└── variables.tf
+Cloud_Developer_Lab/
+
+├── .github/
+│   ├── README.md
+│   └── workflows/
+│       └── terraform.yml
+│
+├── azure/
+│   └── day-01-foundations/
+│       ├── images/
+│       ├── powershell/
+│       │   ├── README.md
+│       │   ├── create-resource-group.ps1
+│       │   └── deploy-app-service.ps1
+│       │
+│       ├── terraform/
+│       │   ├── README.md
+│       │   ├── main.tf
+│       │   ├── outputs.tf
+│       │   ├── providers.tf
+│       │   └── variables.tf
+│       │
+│       └── README.md
+│
+├── docs/
+│   └── evidence/
+│       └── terraform-validation.png
+│
+├── reference/
+│   ├── powershell-syntax.md
+│   └── terraform-syntax.md
+│
+├── .gitignore
+└── README.md
 ```
 
-### providers.tf
+## Current Progress
 
-Defines the Terraform configuration and AzureRM provider used to communicate with Microsoft Azure.
+### Azure Foundations
 
-### variables.tf
+Completed practical work includes:
 
-Defines reusable input variables used by the Terraform configuration.
+- Azure sandbox access
+- Azure Resource Group inspection
+- Azure RBAC troubleshooting
+- App Service Plan deployment
+- Azure Web App deployment
+- Web App state verification
+- Public hostname retrieval
+- PowerShell-based Azure administration
 
-These allow values such as resource names and locations to be changed without editing the main resource definitions.
+### PowerShell
 
-### main.tf
+Used Azure PowerShell to:
 
-Contains the Azure infrastructure definitions.
+- Define reusable variables
+- Query Azure resources
+- Create an App Service Plan
+- Create a Web App
+- Retrieve resource properties
+- Verify deployment status
+- Diagnose permission and parameter errors
 
-Current configuration includes:
+### Terraform
 
-- Existing Azure Resource Group data source
-- App Service Plan
-- Linux Web App
+Started recreating the Azure deployment using Infrastructure as Code.
+
+Current Terraform configuration includes:
+
+- AzureRM provider configuration
+- Reusable input variables
+- Existing Resource Group data source
+- App Service Plan resource
+- Linux Web App resource
+- Terraform outputs
 - Resource dependencies
 
-### outputs.tf
+### Terraform Validation
 
-Defines values Terraform should display after processing the configuration.
+Before pushing the Terraform configuration to GitHub, I tested it locally within my WSL Ubuntu environment.
 
-Outputs can be used to retrieve useful resource information such as:
-
-- Resource names
-- Resource IDs
-- Web App hostname
-
-## Local Validation
-
-Before pushing the Terraform configuration to GitHub, I tested it locally using WSL Ubuntu.
-
-The following commands were used:
+I ran:
 
 ```bash
 terraform fmt -check
@@ -62,81 +127,87 @@ terraform init
 terraform validate
 ```
 
-### terraform fmt -check
+These checks confirmed:
 
-Checks that the Terraform configuration follows the expected formatting standards.
+- `terraform fmt -check` checked that the Terraform configuration followed the expected formatting.
+- `terraform init` initialized the working directory and downloaded the required AzureRM provider.
+- `terraform validate` checked the HCL configuration for syntax and configuration errors.
 
-### terraform init
+The validation completed successfully with:
 
-Initializes the Terraform working directory and downloads the required provider dependencies.
+> Success! The configuration is valid.
 
-During this step Terraform downloaded the AzureRM provider and created the `.terraform.lock.hcl` dependency lock file.
+This confirmed that the Terraform configuration was structurally valid before being committed and pushed to GitHub.
 
-### terraform validate
+![Terraform validation](docs/evidence/terraform-validation.png)
 
-Checks the Terraform configuration for syntax and structural configuration errors.
+### GitHub Actions
 
-The validation completed successfully:
+Started building a generic Terraform CI pipeline.
 
-```text
-Success! The configuration is valid.
-```
-
-This confirmed that the Terraform HCL configuration was structurally valid before being committed and pushed to GitHub.
-
-## Evidence
-
-Validation evidence is stored in:
+Current workflow includes:
 
 ```text
-docs/evidence/terraform-validation.png
-```
-
-![Terraform validation](../../../docs/evidence/terraform-validation.png)
-
-## Current Status
-
-### Completed
-
-- Terraform configuration created
-- AzureRM provider defined
-- Variables created
-- Azure resources defined
-- Outputs configured
-- Local formatting check completed
-- Terraform initialization completed
-- Terraform validation completed successfully
-
-### Next
-
-- Run `terraform plan`
-- Review the proposed infrastructure changes
-- Add Terraform plan validation to GitHub Actions
-- Configure Azure authentication later
-- Add controlled Terraform deployment using `terraform apply`
-
-## Intended Terraform Workflow
-
-```text
-Write HCL configuration
+Git push / Pull Request
         ↓
-terraform fmt
+GitHub Actions
+        ↓
+Checkout repository
+        ↓
+Setup Terraform
+        ↓
+terraform fmt -check
         ↓
 terraform init
         ↓
 terraform validate
-        ↓
-terraform plan
-        ↓
-Review changes
-        ↓
-terraform apply
-        ↓
-Azure
 ```
 
-## Learning Outcome
+Azure deployment authentication is intentionally not configured yet.
 
-This lab demonstrates the process of defining Azure infrastructure using Terraform and validating Infrastructure as Code before deployment.
+The current workflow focuses on validating Infrastructure as Code without requiring persistent cloud credentials.
 
-The next stage is to use `terraform plan` to compare the desired Terraform configuration against the target Azure environment before any changes are applied.
+## Troubleshooting Examples
+
+The labs intentionally document failures as well as successful deployments.
+
+Examples include:
+
+- Azure `403 Forbidden` caused by sandbox RBAC restrictions
+- PowerShell parameter-set errors
+- Correcting App Service Plan deployment parameters
+- Verifying deployed resources after creation
+- Terraform planning blocked by intentionally absent Azure authentication
+
+## Reference Documentation
+
+The `reference/` directory contains notes and syntax references created while learning.
+
+Current references include:
+
+- PowerShell syntax
+- Terraform / HCL syntax
+
+These are intended to reinforce understanding rather than simply copying commands.
+
+## Next Steps
+
+Planned areas include:
+
+- Complete Terraform CI validation in GitHub Actions
+- Capture CI evidence
+- Azure Activity Log
+- Azure IAM / RBAC
+- Azure Metrics
+- Resource Health
+- Deployment Center
+- Python automation
+- Azure Storage
+- Azure databases
+- Monitoring and diagnostics
+- Terraform plan in a controlled Azure environment
+- CI/CD deployment after authentication and cost controls are configured
+
+## Goal
+
+Build a practical portfolio demonstrating continued development in cloud engineering, automation, Infrastructure as Code, troubleshooting, and DevOps practices.
