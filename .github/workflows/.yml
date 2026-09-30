@@ -28,9 +28,11 @@ jobs:
       - name: Check Terraform formatting
         run: terraform fmt -check
 
-          - name: Terraform Init
+      - name: Terraform Init
         run: terraform init
-                  - name: Terraform Validate
+
+      - name: Terraform Validate
         run: terraform validate
-              - name: Terraform Plan
+
+      - name: Terraform Plan
         run: terraform plan -input=false
