@@ -53,9 +53,19 @@ This demonstrated how Azure RBAC controls which actions an authenticated identit
 
 The sandbox-provided Resource Group was used for the rest of the lab.
 
+I verified the existing sandbox Resource Group using PowerShell:
+
+![Existing sandbox Resource Group](images/01-resource-group-existing.png)
+
 ### App Service Plan
 
 I created an Azure App Service Plan using PowerShell.
+
+My first attempt returned a PowerShell parameter-set error:
+
+![App Service Plan parameter error](images/02-app-service-plan-error.png)
+
+After correcting the command, I used:
 
 ```powershell
 New-AzAppServicePlan `
@@ -66,7 +76,13 @@ New-AzAppServicePlan `
     -WorkerSize Small
 ```
 
-The App Service Plan was created successfully.
+The App Service Plan was created successfully:
+
+![App Service Plan created](images/03-app-service-plan-created.png)
+
+I then verified the App Service Plan in the Azure Portal:
+
+![App Service Plan visible in Azure Portal](images/04-app-service-plan-portal.png)
 
 ### Web App
 
@@ -81,6 +97,8 @@ New-AzWebApp `
 ```
 
 The Web App entered the `Running` state.
+
+![Web App created](images/05-web-app-created.png)
 
 ### Verification
 
@@ -98,6 +116,8 @@ Result:
 
 - State: `Running`
 - Hostname: `liam-cloud-dev-day01-webapp.azurewebsites.net`
+
+![Web App verification](images/06-web-app-verification.png)
 
 ## Current Resource Structure
 
