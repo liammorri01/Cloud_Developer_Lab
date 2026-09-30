@@ -7,9 +7,7 @@ on:
       - ".github/workflows/terraform.yml"
 
   pull_request:
-    paths:
-      - "azure/day-01-foundations/terraform/**"
-      - ".github/workflows/terraform.yml"
+
 
 jobs:
   terraform:
