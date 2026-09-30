@@ -3,8 +3,8 @@ name: Terraform
 on:
   push:
     paths:
-      - "azure/day-01-foundations/terraform/**"
-      - ".github/workflows/terraform.yml"
+      - "azure/app-service-iac-ci/terraform/**"
+      - ".github/workflows/terraform-ci.yml"
 
   pull_request:
 
@@ -16,7 +16,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: azure/day-01-foundations/terraform
+        working-directory: azure/app-service-iac-ci/terraform
 
     steps:
       - name: Checkout repository
@@ -28,9 +28,8 @@ jobs:
       - name: Check Terraform formatting
         run: terraform fmt -check
 
-          - name: Terraform Init
+      - name: Terraform Init
         run: terraform init
-                  - name: Terraform Validate
+
+      - name: Terraform Validate
         run: terraform validate
-              - name: Terraform Plan
-        run: terraform plan -input=false
