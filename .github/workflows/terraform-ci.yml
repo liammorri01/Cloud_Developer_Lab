@@ -3,8 +3,8 @@ name: Terraform
 on:
   push:
     paths:
-      - "azure/day-01-foundations/terraform/**"
-      - ".github/workflows/terraform.yml"
+      - "azure/app-service-iac-ci/terraform/**"
+      - ".github/workflows/terraform-ci.yml"
 
   pull_request:
 
@@ -16,7 +16,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: azure/day-01-foundations/terraform
+        working-directory: azure/app-service-iac-ci/terraform
 
     steps:
       - name: Checkout repository
